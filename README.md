@@ -6,12 +6,24 @@ This Python project automates the process of creating a weather vlog by integrat
 
 ## 🚀 Features
 
-✅ Automated weather data fetching
-✅ Dynamic text script generation based on weather insights
-✅ Image fetching via Pexels API for visuals
-✅ Climate trend analysis using historical data
-✅ Automated newsletter and blog post creation
-✅ AI-narrated video with text overlays
+✅ Automated weather data fetching  
+✅ Dynamic text script generation based on weather insights  
+✅ Image fetching via Pexels API for visuals  
+✅ Climate trend analysis using historical data  
+✅ Automated newsletter and blog post creation  
+✅ AI-narrated video with text overlays  
+
+---
+
+## 🛠️ Tools Used
+
+- **Python** - Core language for the automation logic
+- **MoviePy** - For video editing and overlay generation
+- **Pexels API** - For fetching relevant weather and city images
+- **Weatherstack API** - For fetching real-time weather data
+- **Pexels API & PDFKit** - For generating blog posts and newsletters
+- **NLTK, NLP, and Olama Mistral Model** - For generating text scripts with AI language capabilities
+- **Pyttsx3** - For converting text to speech (AI narration)
 
 ---
 
@@ -73,21 +85,53 @@ python main.py
 ```
 
 ### Output
-✅ Newsletter will be generated in `/output/weather_newsletter.html`
-✅ Blog post will be saved in `/blog/index.html`
-✅ Final Vlog video will be saved as `/media/output.mp4`
+✅ Newsletter will be generated in `/newsletter/weather_newsletter.html` and ``/newsletter/weather_newsletter.pdf`
+✅ Blog post will be saved in `/blog/index.html` and  `/blog/weather_blog.pdf`
+✅ Final Vlog video will be saved as `/media/output.mp4`  
+
 
 ---
 
+### Newsletter Screenshot
+
+![Newsletter Screenshot](images/newsletter1.png)
+
+
+![Newsletter Screenshot](images/newsletter2.png)
+
+
+![Newsletter Screenshot](images/newsletter3.png)
+
+
+
+
+### Blog Screenshot
+
+
+![Blog Screenshot](images/blog1.png)
+
+
+![Blog Screenshot](images/blog2.png)
+
+
+### Vlog Output
+
+
+![Vlog output](media/output.mp4)
+
+---
+
+
+
 ## 🔧 Troubleshooting
 
-**1. Image Fetch Failure**
+**1. Image Fetch Failure**  
 - If the Pexels image fetch fails, the system will automatically switch to fallback images.
 
-**2. Video Creation Issues**
+**2. Video Creation Issues**  
 - Ensure `ImageMagick` path is configured correctly in `main.py`
 
-**3. Missing Libraries**
+**3. Missing Libraries**  
 - Run `pip install -r requirements.txt` to install dependencies.
 
 ---
@@ -96,4 +140,3 @@ python main.py
 Contributions are welcome! Feel free to submit pull requests or report issues.
 
 For queries, contact Naveen via snaveenkpn@gmail.com.
-
