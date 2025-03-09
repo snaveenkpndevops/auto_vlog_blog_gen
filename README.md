@@ -105,6 +105,9 @@ python main.py
 
 
 
+
+
+
 ### Blog Screenshot
 
 
@@ -114,10 +117,13 @@ python main.py
 ![Blog Screenshot](images/blog2.png)
 
 
+
+
+
 ### Vlog Output
 
 
-![Vlog output](media/output.mp4)
+🎬 [Watch the Vlog Video](media/output.mp4)
 
 ---
 
