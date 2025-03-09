@@ -1,0 +1,62 @@
+# Utility libraries
+appdirs==1.4.4             # Manage application data directories
+Brotli==1.1.0              # Compression algorithm for web data
+certifi==2025.1.31         # SSL certificates for secure HTTP requests
+cffi==1.17.1               # C Foreign Function Interface for Python
+chardet==5.2.0             # Character encoding detection
+
+# String and encoding utilities
+charset-normalizer==3.4.1  # Character encoding auto-detection
+click==8.1.8               # Command-line interface creation
+colorama==0.4.6            # Color text output in terminal
+
+# Windows-specific utilities
+comtypes==1.4.10           # Component Object Model (COM) interface
+pypiwin32==223             # Win32 API bindings for Python
+pywin32==308               # Python extensions for Windows
+
+# Web and HTML parsing
+cssselect2==0.8.0          # CSS selectors for XML/HTML documents
+tinycss2==1.4.0            # Tiny CSS parser for Python
+tinyhtml5==2.0.0           # Lightweight HTML5 parser
+webencodings==0.5.1        # Encoding utilities for web data
+
+# Image and video processing
+fonttools==4.56.0          # Font manipulation library
+imageio==2.37.0            # Image I/O library
+imageio-ffmpeg==0.6.0      # FFmpeg support for imageio
+moviepy==1.0.3             # Video editing library
+
+# NLP and text processing
+nltk==3.9.1                # Natural Language Toolkit
+regex==2024.11.6           # Advanced regex support
+pyphen==0.17.2             # Hyphenation library
+
+# Data science and utility tools
+numpy==2.2.3               # Numerical computing library
+joblib==1.4.2              # Efficient computation with joblib
+pillow==10.4.0             # Image processing library
+
+# PDF and document generation
+pdfkit==1.0.0              # PDF generation using wkhtmltopdf
+pydyf==0.11.0              # PDF generation utility
+reportlab==4.3.1           # PDF generation toolkit
+weasyprint==64.1           # HTML to PDF converter
+
+# Automation and browser control
+pyee==11.1.1               # EventEmitter for Python
+pyppeteer==2.0.0           # Headless Chrome automation
+websockets==10.4           # WebSocket support
+
+# Environment and config management
+python-dotenv==1.0.1       # Load environment variables from .env
+pyttsx3==2.98              # Text-to-speech conversion
+
+# HTTP and networking
+requests==2.32.3           # HTTP requests library
+urllib3==1.26.20           # HTTP client for Python
+
+# Progress and output utilities
+tqdm==4.67.1               # Progress bar support
+zipp==3.21.0               # Path-compatible ZIP archive access
+zopfli==0.2.3.post1        # Compression algorithm for improved compression rates
