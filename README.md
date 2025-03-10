@@ -131,9 +131,13 @@ python main.py
 
 ![Blog Screenshot](images/blog2.png)
 
-### Vlog Output
+### 🎬 Vlog Output  
 
-🎬 [Watch the Vlog Video](media/output.mp4)
+Since GitHub's `README.md` does not support `.mp4` video playback directly, a `.gif` representation of the output video is provided below for reference:  
+
+🖥️ **[View Vlog GIF](media/output.gif)**  
+
+For the full `.mp4` video experience, please access the original file directly from the project repository.
 
 ---
 

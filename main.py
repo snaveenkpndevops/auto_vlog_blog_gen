@@ -12,6 +12,7 @@ from moviepy.editor import *
 from moviepy.config import change_settings
 import json
 from PIL import Image
+import re
 
 # Ensure ImageMagick path is configured correctly
 change_settings({"IMAGEMAGICK_BINARY": "C:\\Program Files\\ImageMagick-7.1.1-Q16-HDRI\\magick.exe"})
@@ -27,77 +28,116 @@ def map_weather_to_image(weather_condition):
     }
     return weather_image_map.get(weather_condition, "default_weather.jpg")
 
+def extract_keywords_from_text(news_text):
+    # Identify weather-related keywords
+    keywords = []
+    weather_keywords = ["rain", "snow", "fog", "thunderstorm", "clear sky", "cloudy", "wind", "storm", "hail"]
+    for keyword in weather_keywords:
+        if re.search(rf"\b{keyword}\b", news_text, re.IGNORECASE):
+            keywords.append(keyword)
+    return keywords
+
+
+def fetch_dynamic_images(news_text, folder_path):
+    keywords = extract_keywords_from_text(news_text)
+    
+    # Default image fallback
+    images = []
+
+    for keyword in keywords:
+        image_path = os.path.join(folder_path, f"{keyword.replace(' ', '_')}.jpg")
+        image = fetch_image(f"{keyword} weather", image_path)
+        if image:
+            images.append(image)
+        else:
+            print(f"❌ Image for '{keyword}' not found. Using fallback image.")
+            images.append("media/images/default_weather.jpg")
+    
+    return images
+
+
 def run_workflow():
-    print("Fetching weather data...")
-    weather_data = fetch_weather()
+    try:
+        print("[INFO] Fetching weather data...")
+        weather_data = fetch_weather()
 
-    print("Generating vlog script...")
-    news_text = generate_script(weather_data)
+        print("[INFO] Generating vlog script...")
+        news_text = generate_script(weather_data)
 
-    print("📸 Fetching relevant images dynamically...")
-    today_date = datetime.today().strftime("%Y-%m-%d")
-    folder_path = os.path.join("media", "images", today_date)
-    os.makedirs(folder_path, exist_ok=True)
+        print("[INFO] 📸 Fetching relevant images dynamically...")
+        today_date = datetime.today().strftime("%Y-%m-%d")
+        folder_path = os.path.join("media", "images", today_date)
+        os.makedirs(folder_path, exist_ok=True)
 
-    weather_condition = weather_data.get('condition', 'Clear sky')
-    detailed_condition = f"{weather_condition} in {weather_data.get('city', 'your city')}"
-    weather_image_name = map_weather_to_image(weather_condition)
+        # Improved image logic with priority and fallback
+        weather_condition = weather_data.get('condition', 'Clear sky')
+        detailed_condition = f"{weather_condition} in {weather_data.get('city', 'your city')}"
+        weather_image_name = map_weather_to_image(weather_condition)
 
-    weather_image = fetch_image(detailed_condition, os.path.join(folder_path, weather_image_name))
-    city_image = fetch_image("Chennai city skyline", os.path.join(folder_path, "city.jpg"))
+        weather_image = fetch_image(detailed_condition, os.path.join(folder_path, weather_image_name))
+        city_image = fetch_image("Chennai city skyline", os.path.join(folder_path, "city.jpg"))
 
-    if not weather_image or not city_image:
-        print("❌ Image fetch failed. Using fallback images.")
-        weather_image = "media/images/default_weather.jpg"
-        city_image = "media/images/city.jpg"
+        # Dynamic fallback condition
+        if not weather_image:
+            print("[WARNING] ❌ Weather image fetch failed. Using fallback.")
+            weather_image = "media/images/default_weather.jpg"
+        if not city_image:
+            print("[WARNING] ❌ City image fetch failed. Using fallback.")
+            city_image = "media/images/city.jpg"
 
-    print("📊 Analyzing climate trends...")
-    historical_data = {
-        "date": "2024-02-26",
-        "temperature": 28,
-        "humidity": 65
-    }
-    climate_trends = analyze_climate(weather_data, historical_data)
+        print("[INFO] 📊 Analyzing climate trends...")
+        historical_data = {
+            "date": "2024-02-26",
+            "temperature": 28,
+            "humidity": 65
+        }
+        climate_trends = analyze_climate(weather_data, historical_data)
 
-    print("📰 Generating daily newsletter...")
-    newsletter_path = generate_newsletter(weather_data, climate_trends)
-    print(f"✅ Newsletter created at: {newsletter_path}")
+        print("[INFO] 📰 Generating daily newsletter...")
+        newsletter_path = generate_newsletter(weather_data, climate_trends)
+        print(f"[SUCCESS] ✅ Newsletter created at: {newsletter_path}")
 
-    print("✍️ Generating blog post...")
-    blog_path = generate_blog(weather_data, climate_trends)
-    print(f"✅ Blog created at: {blog_path}")
+        print("[INFO] ✍️ Generating blog post...")
+        blog_path = generate_blog(weather_data, climate_trends)
+        print(f"[SUCCESS] ✅ Blog created at: {blog_path}")
 
-    print("🗣️ Generating narration audio with timing data...")
-    text_to_speech("media/narration.mp3", "media/subtitles.json")
+        print("[INFO] 🗣️ Generating narration audio with timing data...")
+        text_to_speech("media/narration.mp3", "media/subtitles.json")
 
-    # Using the existing narration audio
-    audio_path = "media/narration.mp3"
-    subtitle_data_path = "media/subtitles.json"
+        # Using existing narration audio
+        audio_path = "media/narration.mp3"
+        subtitle_data_path = "media/subtitles.json"
 
-    print("🎥 Creating video with AI voice, images, and synced subtitles...")
-    video_output_path = "media/output.mp4"
-    create_video_with_text_overlay(weather_image, city_image, audio_path, subtitle_data_path, video_output_path)
+        print("[INFO] 🎥 Creating video with AI voice, images, and synced subtitles...")
+        video_output_path = "media/output.mp4"
+        create_video_with_text_overlay(weather_image, city_image, audio_path, subtitle_data_path, video_output_path)
 
-    print("✅ Automated vlog is ready! Check 'media/output.mp4'")
+        print("[SUCCESS] ✅ Automated vlog is ready! Check 'media/output.mp4'")
+
+    except Exception as e:
+        print(f"[ERROR] ❌ Workflow failed: {str(e)}")
 
 # Video Creation Function
 def create_video_with_text_overlay(weather_image, city_image, audio_path, subtitle_data_path, output_video_path):
     # Grey Background
-    background_clip = ColorClip(size=(1280, 720), color=(220, 220, 220)).set_duration(10)
+    background_clip = ColorClip(size=(1280, 720), color=(220, 220, 220)).set_duration(16)
 
     # Avatar (News Reader)
     avatar_image = "media/avatar.png"
     if os.path.exists(avatar_image):
-        avatar_clip = ImageClip(avatar_image).set_duration(10).resize(height=400).set_position(("left", "center"))
+        avatar_clip = ImageClip(avatar_image).set_duration(16).resize(height=400).set_position(("left", "center"))
     else:
         print("⚠️ Avatar image missing. Skipping avatar overlay.")
         avatar_clip = None
 
-    # Weather Image (Positioned correctly on the right)
-    weather_clip = ImageClip(weather_image).set_duration(10).resize(height=150).set_position(("right", 100))
+    # Weather Image (First 10 seconds)
+    weather_clip = ImageClip(weather_image).set_duration(8).resize(height=300, width=1200).set_position(("center", 50))
 
-    # City Image (Optional Background Element at bottom-right)
-    city_clip = ImageClip(city_image).set_duration(10).resize(height=180).set_position(("right", "bottom"))
+    # City Image (Next 10 seconds)
+    city_clip = ImageClip(city_image).set_duration(8).resize(height=300, width=1200).set_position(("center", 50)).set_start(8)
+
+
+            
 
     # Combine Visual Elements
     visual_layers = [background_clip]

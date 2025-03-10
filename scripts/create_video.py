@@ -18,7 +18,7 @@ def create_video(image_paths, audio_path, subtitle_data_path, output_video_path)
     image_duration = total_duration / len(image_paths)
 
     # Improved background creation with a softer color
-    background = ColorClip(size=(1280, 720), color=(240, 240, 240)).set_duration(total_duration)
+    background = ColorClip(size=(1280, 720), color=(240, 240, 240)).set_duration(20)
 
     # Avatar (news reader) resized and positioned centrally on the left side
     avatar_path = "media/avatar.png"
@@ -26,7 +26,7 @@ def create_video(image_paths, audio_path, subtitle_data_path, output_video_path)
         print("❌ Avatar image not found! Exiting...")
         return
 
-    avatar_clip = ImageClip(avatar_path).set_duration(total_duration).resize(height=450).set_position((80, 'center'))
+    avatar_clip = ImageClip(avatar_path).set_duration(20).resize(height=450).set_position((80, 'center'))
 
     # Weather images resized and placed at the top-right above the center with improved alignment
     image_clips = []
